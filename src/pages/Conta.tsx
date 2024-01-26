@@ -4,10 +4,10 @@ import { useContext, useEffect, useState } from "react"
 import { api } from "../api"
 import CardInfo from "../components/CardInfo"
 import { AppContext } from "../components/AppContext"
+import { createLoginLocalStorage } from "../services/storage"
 
 interface UserData {
     email: string
-    password: string
     name: string
     balance: number
     id: string
@@ -26,6 +26,7 @@ const Conta = () => {
         const getData = async () => {
             const data: any | UserData = await api
             setUserData(data)
+            createLoginLocalStorage(data)
         }
 
         getData()
@@ -49,7 +50,7 @@ const Conta = () => {
                     ) : 
                     (
                         <>
-                            <CardInfo mainContent={`Bem vinda ${userData?.name}`} content={`${actualData.getDay()} / ${actualData.getMonth()} / ${actualData.getFullYear()} ${actualData.getHours()}:${actualData.getMinutes()}`} />
+                            <CardInfo mainContent={`Bem vindo(a) ${userData?.name}`} content={`${actualData.getDay()} / ${actualData.getMonth()} / ${actualData.getFullYear()} ${actualData.getHours()}:${actualData.getMinutes()}`} />
                             <CardInfo mainContent='Saldo' content={`R$ ${userData.balance}`}/>
                         </>
                     )
